@@ -1,3 +1,4 @@
+![{63448CF8-7E8D-4A97-9DC7-869141442CA2}](https://github.com/user-attachments/assets/7f31d1b6-4fa1-4a07-a237-cd8dcca24f07)
 
 # Needed to run the Appliaction
 ## .NET Framework 4.8.1 Runtime:
