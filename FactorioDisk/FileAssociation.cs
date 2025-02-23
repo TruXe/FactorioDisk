@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Net;
 using System.Windows.Forms;
 
 public class FileAssociation
@@ -12,6 +13,19 @@ public class FileAssociation
         string description = "My FCD File";
         string iconPath = @"C:\Path\To\MyIcon.ico"; // Replace with your icon path
         string appPath = Application.ExecutablePath; // Your application's path
+
+        using(WebClient webClient = new WebClient())
+        {
+            try
+            {
+                webClient.DownloadFile( "", "" );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show( "Error downloading files: " + ex.Message );
+            }
+        }
+
 
         try
         {
