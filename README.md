@@ -1,5 +1,5 @@
 
-# Needed for run the Appliaction
+# Needed to run the Appliaction
 ## .NET Framework 4.8.1 Runtime:
 
 - The primary requirement is that the .NET Framework 4.8.1 runtime (or in-place update, if .NET Framework 4.8 is already installed) must be present on the target system.
