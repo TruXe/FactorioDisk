@@ -22,16 +22,25 @@ namespace FactorioDisk
 
         private void Form1_Load( object sender, EventArgs e )
         {
+            FileAssociation.RegisterFcdFileAssociation();
+            FileAssociation.RefreshIcons();
             string version = Globals.version;
 
             title_lbl.Text = "Factorio Disk" + $" v{version}" ;
             this.Text = "Factorio Disk" + $" v{version}";
 
+            if(!File.Exists("setuped"))
+            {
+                File.Create( "setuped" ).Close();
+                FileAssociation.RegisterFcdFileAssociation();
+                FileAssociation.RefreshIcons();
+            }
+
             if(!Directory.Exists(DIR_BLUEPRINTS))
             {
                 Directory.CreateDirectory( DIR_BLUEPRINTS );
-                File.Create( Path.Combine( DIR_BLUEPRINTS, "Test.fcd" ) ).Close();
-                MessageBox.Show( "Blueprints directory created", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information );
+               // File.Create( Path.Combine( DIR_BLUEPRINTS, "Test.fcd" ) ).Close();
+                //MessageBox.Show( "Blueprints directory created", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information );
                 LoadBlueprints();
             }
             else
@@ -60,7 +69,7 @@ namespace FactorioDisk
             }
             else
             {
-                MessageBox.Show( "Blueprints directory not found!" );
+                //MessageBox.Show( "Blueprints directory not found!" );
             }
         }
 
@@ -182,6 +191,50 @@ namespace FactorioDisk
             else
             {
                 //MessageBox.Show( "There is no text to copy." );
+            }
+        }
+
+        private void button3_Click( object sender, EventArgs e )
+        {
+            Environment.Exit( 0 );
+        }
+
+        private void button6_Click( object sender, EventArgs e )
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+
+        private void panel1_MouseDown( object sender, MouseEventArgs e )
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Start dragging: store initial cursor and form locations
+                dragging = true;
+                dragCursorPoint = Cursor.Position;
+                dragFormPoint = this.Location;
+            }
+        }
+
+        private void panel1_MouseMove( object sender, MouseEventArgs e )
+        {
+            if (dragging)
+            {
+                // Calculate the new form location based on the cursor movement
+                Point diff = Point.Subtract( Cursor.Position, new Size( dragCursorPoint ) );
+                this.Location = Point.Add( dragFormPoint, new Size( diff ) );
+            }
+        }
+
+        private void panel1_MouseUp( object sender, MouseEventArgs e )
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Stop dragging when the left mouse button is released
+                dragging = false;
             }
         }
     }
